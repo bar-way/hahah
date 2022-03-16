@@ -1,0 +1,127 @@
+﻿//扩展验证
+$.extend($.fn.validatebox.defaults.rules, {
+	
+	
+		positiveNumber: {// 验证正整数（含0）
+			validator: function (value) {
+                    return /^[+]{0,1}(\d+)$/i.test(value);
+                },
+                message: '请输入正整数（含0）'
+		},
+		age: {// 验证年龄
+                validator: function (value) {
+                    return /^(?:[1-9][0-9]?|1[01][0-9]|120)$/i.test(value);
+                },
+                message: '年龄必须是0到120之间的整数'
+        },
+        faxno: {// 验证传真
+                validator: function (value) {
+                    //            return /^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/i.test(value);
+                    return /^((\d2,3\d2,3)|(\d{3}\-))?(0\d2,30\d2,3|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/i.test(value);
+                },
+                message: '传真号码不正确'
+        },
+        zip: {// 验证邮政编码
+                validator: function (value) {
+                    return /^[1-9]\d{5}$/i.test(value);
+                },
+                message: '邮政编码格式不正确'
+        },
+        ip: {// 验证IP地址
+                validator: function (value) {
+                    return /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/i.test(value);
+                },
+                message: 'IP地址格式不正确'
+        },
+		idCard: {// 验证身份证
+                validator: function (value) {
+                    return /^\d{15}(\d{2}[A-Za-z0-9])?$/i.test(value);
+                },
+                message: '身份证号码格式不正确'
+        },
+		mobiePhone : {
+			validator : function(value) {return /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|166|18[0|1|2|3|5|6|7|8|9])\d{8}$/i.test(value) || /^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/i.test(value);},
+			message : "请输入正确的手机或固定号码"
+		},
+		phone : {// 验证固定电话
+			validator : function(value) {return /^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/i.test(value);},
+			message : lang.ui_extend_msg01
+		},
+		carNum : {// 验证车牌号
+			validator : function(value) {return /^(京[A-HJ-NPQY]|沪[A-HJ-N]|津[A-HJ-NPQR]|渝[A-DFGHN]|冀[A-HJRST]|晋[A-FHJ-M]|蒙[A-HJKLM]|辽[A-HJ-NP]|吉[A-HJK]|黑[A-HJ-NPR]|苏[A-HJ-N]|浙[A-HJKL]|皖[A-HJ-NP-S]|闽[A-HJK]|赣[A-HJKLMS]|鲁[A-HJ-NP-SUVWY]|豫[A-HJ-NP-SU]|鄂[A-HJ-NP-S]|湘[A-HJ-NSU]|粤[A-HJ-NP-Y]|桂[A-HJ-NPR]|琼[A-F]|川[A-HJ-MQ-Z]|贵[A-HJ]|云[AC-HJ-NP-SV]|藏[A-HJ]|陕[A-HJKV]|甘[A-HJ-NP]|青[A-H]|宁[A-E]|新[A-HJ-NP-S])([0-9A-HJ-NP-Z]{4}[0-9A-HJ-NP-Z挂试]|[0-9]{4}学|[A-D0-9][0-9]{3}警|[DF][0-9A-HJ-NP-Z][0-9]{4}|[0-9]{5}[DF])$|^WJ[京沪津渝冀晋蒙辽吉黑苏浙皖闽赣鲁豫鄂湘粤桂琼川贵云藏陕甘青宁新]?[0-9]{4}[0-9JBXTHSD]$|^(V[A-GKMORTV]|K[A-HJ-NORUZ]|H[A-GLOR]|[BCGJLNS][A-DKMNORVY]|G[JS])[0-9]{5}$|^[0-9]{6}使$|^([沪粤川渝辽云桂鄂湘陕藏黑]A|闽D|鲁B|蒙[AEH])[0-9]{4}领$|^粤Z[0-9A-HJ-NP-Z][0-9]{3}[港澳]$/i.test(value);},
+			message : '请输入正确的车牌号'
+		},
+		
+		CheckboxNotNull:{ //复选框必填
+			validator : function(value,param) {
+				var chkval=false;
+				$('input[name="'+param[0]+'"]:checked').each(function(){chkval=true;});
+  				if(chkval==true){
+  					$('input[name="'+param[0]+'"]').each(function(){$(this).removeClass("validatebox-invalid");});
+  				}
+  				return chkval;
+    		},
+			message : lang.ui_extend_msg02
+		},
+		RadioNotNull:{ //单选按扭必填
+			validator : function(value,param) {
+				var chkval=false;
+				$('input[name="'+param[0]+'"]:checked').each(function(){chkval=true;});
+  				if(chkval==true){
+  					$('input[name="'+param[0]+'"]').each(function(){$(this).removeClass("validatebox-invalid");});
+  				}
+  				return chkval;
+    		},
+			message : lang.ui_extend_msg03
+		},
+		integer : {validator : function(value) {return /^[+]?[1-9]+\d*$/i.test(value);},message : lang.ui_extend_msg04},
+		intOrFloat : {validator : function(value) {return /^\d+(\.\d+)?$/i.test(value);},message : lang.ui_extend_msg05},
+		equalTo: {validator:function(value,param){return $("#"+param[0]).val() == value;},message:lang.ui_extend_msg06},
+		english:{validator : function(value) {return /^[A-Za-z]+$/i.test(value);}, message : lang.ui_extend_msg07},
+		number:{//取值区间
+		validator : function(value, param) {
+			
+			return value>=param[0]&&value<=param[1];
+		},
+		message : '您输入的数值有误请输入{0}-{1}之间的数！'
+	}
+		
+});
+
+function validReadFieldIsNull(){
+	//验证只读模式的必填字段属性，只检测input类型的具有exttype类型的暂不检测，避开日期控件
+	var r=true;
+	$("[data-options*='required:true']").each(function(){
+		if($(this).css("display")=="none" && $(this).attr("exttype")==undefined&& $(this).attr("comboname")==undefined){
+			var jsonStr="{"+$(this).attr("data-options")+"}";
+			//Edit By Nine 修改将eval调整成JSON.parse而引起的报错
+			//var data=JSON.parse(jsonStr);
+			var data = JSON.parse(jsonStr.replace(/([\d\w]+?):/gm, '\"$1\":').replace(/:[\']*([^,\'\"}]+)\'*/gm , ':"$1"'));
+			if(data.required==true && $(this).val()=="" ){
+				r=false;
+				var missingMessage=data.missingMessage;
+				if(missingMessage!="" && missingMessage!=undefined){
+					alert(data.missingMessage);
+				}else{
+					alert($(this).attr("id")+lang.ui_extend_msg08);
+				}
+			}
+		}
+	});
+	return r;
+}
+
+$.extend($.fn.validatebox.defaults.rules,{  
+    dateValid : {  
+        validator : function(value,param) { //参数value为当前文本框的值，也就是endDate  
+            startTime = $("#"+param[0]).datetimebox('getValue');//获取起始时间的值  
+            var start = new Date(startTime.replace(/-/g,"/"));  
+            var end = new Date(value.replace(/-/g,"/"));
+            varify = end > start;  
+            return varify;  
+        },  
+        message : '结束时间要大于开始时间!'  
+    }  
+});  
+
+/******easy ui 函数结束*****/ 

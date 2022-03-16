@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!-- saved from url=(0105)http://swzx.zspt.edu.cn:1540/bpm//rule?wf_num=R_S003_B062&wf_docunid=049f582e06388040d0093a2096788a5b2ee4 -->
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script async="" src="http://127.0.0.1:57070/json.htm?callback=jQuery1900591520442664667_1647431264047&amp;_=1647431264048"></script>
+    <script src="http://localhost:18000/CLodopfuncs.js?priority=0"></script>
+    <script src="http://localhost:8000/CLodopfuncs.js?priority=1"></script>
+    <title>学生请假申请</title>
+    <link rel="stylesheet" type="text/css" href="./学生请假申请_files/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./学生请假申请_files/icon.css">
+    <link rel="stylesheet" type="text/css" href="./学生请假申请_files/engine_openform.css">
+    <script type="text/javascript" src="./学生请假申请_files/zh_CN.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/jquery.min.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/jquery.easyui.min.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/sharefunction.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/engine_openform.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/uivalidate.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/viewgrid.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/engine_custom.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/easyui-lang-zh_CN.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/LodopFuncs.js.下载"></script>
+    <script type="text/javascript" src="./学生请假申请_files/pageoffice.js.下载" id="po_js_main"></script>
+    <link rel="stylesheet" type="text/css" href="./学生请假申请_files/pobstyle.css">
+    <script type="text/javascript" src="./学生请假申请_files/json.js.下载"></script>
+    <script>
+        function formonload() {
+            $('.easyui-datetimebox').datetimebox({
+                onChange: function() {
+                    checkTS();
+                }
+            });
+        }
+
+        function formonsubmit() {
+            //return false to exit submit
+            //请假节课数,天数，小时数校验
+            //     var WF_CurrentNodeid = $("#WF_CurrentNodeid").val();
+            //     if(WF_CurrentNodeid == "T10002"){
+            // 		var jks = $("#jks").val();
+            // 		var ts = $("#ts").val();
+            // 		var xss = $("#xss").val();
+            // 	    if(jks > 14){
+            // 		    alert("您选择的请假节课数不能大于14节！");
+            // 		    return false;
+            // 	    }
+            // 	    if(xss > 24){
+            // 		    alert("您选择的请假小时数不能大于24小时！");
+            // 		    return false;
+            //     	}
+            // 	    if((jks != "" && ts !="")||(jks != "" && xss !="")){
+            // 		    alert("请假节课数和请假天数只能填一项！");
+            // 		    return false;
+            // 	    }
+            //     }
+        }
+
+        function SaveDocumentCallBack(btnAction, rs) {
+            //保存成功后的回调函数
+            alert(rs.msg);
+            try {
+                opener.$('#dg').datagrid('reload');
+            } catch (e) {}
+            window.close();
+        }
+
+        function checkTS() {
+            debugger;
+            var kssj = new Date($('#qjkssj').datetimebox('getValue').replace(new RegExp(/-/gm), "/"));
+            var jssj = new Date($('#qjjssj').datetimebox('getValue').replace(new RegExp(/-/gm), "/"));
+            var date = jssj - kssj;
+            if (kssj != "" && jssj != "" && jssj < kssj) {
+                alert("结束时间不能小于开始时间");
+                throw "结束时间不能小于开始时间";
+            }
+            if ($('#qjkssj').datetimebox('getValue') != "" && $('#qjjssj').datetimebox('getValue') != "") {
+                var ts = Math.ceil(date / 1000 / 60 / 60 / 24);
+                $('#ts').val(ts);
+                $('#ts').text(ts);
+                var xsts = Math.floor(date / 1000 / 60 / 60 / 24);
+                $('#xsts').val(xsts);
+                $('#xsts').text(xsts);
+                var xsxs = Math.ceil(date / 1000 / 60 / 60 % 24);
+                $('#xsxs').val(xsxs);
+                $('#xsxs').text(xsxs);
+            }
+
+        }
+    </script>
+    <style type="text/css">
+        #_copy {
+            align-items: center;
+            background: #4494D5;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            font-size: 13px;
+            height: 30px;
+            justify-content: center;
+            position: absolute;
+            width: 60px;
+            z-index: 1000
+        }
+        
+        #select-tooltip,
+        #sfModal,
+        .modal-backdrop,
+        div[id^=reader-helper] {
+            display: none!important
+        }
+        
+        .modal-open {
+            overflow: auto!important
+        }
+        
+        ._sf_adjust_body {
+            padding-right: 0!important
+        }
+    </style>
+    <style>
+        .crx_bdwk_down_wrap {
+            top: 70%;
+            left: 0;
+            position: fixed;
+            z-index: 99999999;
+            color: #fff;
+            user-select: none;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_loading {
+            background-color: #666;
+            cursor: wait;
+            width: 126px;
+            text-align: center;
+            padding: 16px 0;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_loading p {
+            font-size: 14px;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_loading small {
+            font-size: 10px;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_btn {
+            width: 126px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: #dd5a57;
+            position: relative;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_types {
+            display: flex;
+            text-align: center;
+            align-items: center;
+            background-color: #666;
+            font-size: 12px;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_types div {
+            position: relative;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_types div:after {
+            content: ' ';
+            height: 12px;
+            width: 1px;
+            background-color: #eee;
+            position: absolute;
+            top: 10px;
+            right: 0;
+            transform: scaleX(0.5);
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_types div:last-child:after {
+            display: none;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_types_check {
+            flex: 1;
+            color: #dd5a57;
+            padding: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .crx_bdwk_down_wrap .crx_bdwk_down_types_uncheck {
+            flex: 1;
+            padding: 8px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: lighter;
+        }
+    </style>
+</head>
+
+<body style="margin: 0px 5px; zoom: 1; cursor: url(&quot;chrome-extension://jlgkpaicikihijadgifklkbpdajbkhjo/image/cursors/008.png&quot;), default;" scroll="auto" _c_t_j1="1">
+    <form action="http://swzx.zspt.edu.cn:1540/bpm//rule?wf_num=R_S003_B062&amp;wf_docunid=049f582e06388040d0093a2096788a5b2ee4" method="post" name="linkeyform" id="linkeyform">
+        <table width="100%" border="0" cellpadding="2" cellspacing="6" class="ApprovalToptable" id="TopFormTable">
+            <tbody>
+                <tr>
+                    <td colspan="2" align="center" style="padding-top:5px;font-size:20px;font-family:&#39;微软雅黑&#39;,&#39;宋体&#39;;color:#000"><b>学生请假申请</b></td>
+                </tr>
+                <tr style="line-height:20px">
+                    <td>
+                        当前状态:已结束<br> 当前处理人:
+                        <br> 审批日记:
+                        <a href="http://swzx.zspt.edu.cn:1540/bpm//rule?wf_num=R_S003_B062&amp;wf_docunid=049f582e06388040d0093a2096788a5b2ee4" onclick="ShowRemark(&#39;cd207a150355f04ea00927804752dc777fbf&#39;,&#39;049f582e06388040d0093a2096788a5b2ee4&#39;);return false;">查看审批日记</a>
+                    </td>
+                    <td align="right">
+                        申请时间:2022-03-23 09:04<br> 申请人:夏德涵
+                        <br> 流程图:
+                        <a href="http://swzx.zspt.edu.cn:1540/bpm//rule?wf_num=R_S003_B062&amp;wf_docunid=049f582e06388040d0093a2096788a5b2ee4" onclick="ShowWorkflow(&#39;cd207a150355f04ea00927804752dc777fbf&#39;,&#39;049f582e06388040d0093a2096788a5b2ee4&#39;);return false;">查看流程图</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="linkeytable" data-sort="sortDisabled">
+            <tbody>
+                <tr class="firstRow">
+                    <td width="160" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" class="texttd">学院</td>
+                    <td width="473" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;"><span id="xy">信息工程学院</span></td>
+                    <td width="219" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" class="texttd">班级</td>
+                    <td width="336" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;"><span id="bj">20信息1班</span></td>
+                </tr>
+                <tr>
+                    <td width="171" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">姓名</td>
+                    <td width="473" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1"><span id="xm">夏德涵</span></td>
+                    <td width="219" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">学号</td>
+                    <td width="189" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1"><span id="xh">16102200134</span></td>
+                </tr>
+                <tr>
+                    <td width="171" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" class="texttd">本人电话</td>
+                    <td width="473" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;"><span id="brdh">13168010660</span></td>
+                    <td width="219" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" class="texttd">家长电话</td>
+                    <td width="189" valign="middle" style="border-width: 1px; border-style: solid;" rowspan="1" colspan="1"><span id="jzdh">17324372214</span></td>
+                </tr>
+                <tr>
+                    <td width="171" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" class="texttd">请假类别</td>
+                    <td width="472" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1"><input type="hidden" id="qjlb" value="事假"><span id="qjlb_show">事假</span></td>
+                    <td width="219" align="" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" class="texttd">外出地点</td>
+                    <td width="531" align="" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1"><span id="wcsf">广东</span>省<span id="wccs">中山</span>市/县</td>
+                </tr>
+                <tr>
+                    <td valign="middle" style="border-top-width: 1px; border-left-width: 1px; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">外出地区</td>
+                    <td valign="middle" style="border-top-width: 1px; border-left-width: 1px; -ms-word-break: break-all;" rowspan="1" colspan="3"><input disabled="" name="WCDQ" id="WCDQ" type="radio" value="市内">市内&nbsp; &nbsp;<input disabled="" name="WCDQ" id="WCDQ" type="radio" value="市外">市外&nbsp;&nbsp;<input disabled="" name="WCDQ" id="WCDQ" type="radio" value="省外">省外</td>
+                </tr>
+                <tr>
+                    <td width="171" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" class="texttd">请假事由</td>
+                    <td width="1245" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="3"><span id="_baidu_bookmark_start_5" style="line-height: 0px; display: none;">‍</span><span id="_baidu_bookmark_start_6" style="line-height: 0px; display: none;">‍</span><span id="_baidu_bookmark_start_7" style="line-height: 0px; display: none;">‍</span>
+                        <span id="qjsy">医院看病</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="171" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">请假时间</td>
+                    <td width="1245" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="3"><span id="qjkssj">2022-3-23 10:04</span>至<span id="qjjssj">2022-03-23 15:04</span><span id="_baidu_bookmark_start_8" style="line-height: 0px; display: none;">‍</span><span id="ts" style="display:none">1</span></td>
+                </tr>
+                <tr>
+                    <td width="171" align="left" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">请假时长<span id="_baidu_bookmark_start_11" style="line-height: 0px; display: none;">‍</span><span id="_baidu_bookmark_start_12" style="line-height: 0px; display: none;">‍</span><span id="_baidu_bookmark_start_3" style="line-height: 0px; display: none;">‍</span></td>
+                    <td width="1245" align="left" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="3"><span id="xsts">0</span>天<span id="xsxs">5</span>小时</td>
+                </tr>
+                <tr>
+                    <td width="171" align="left" valign="middle" style="border-top-width: 1px; border-left-width: 1px; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">请假证明上传</td>
+                    <td width="1245" align="left" valign="middle" style="border-top-width: 1px; border-left-width: 1px;" rowspan="1" colspan="3">
+                        <div id="file1" class="attachmentlist" readtype="true">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="171" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">本人承诺</td>
+                    <td width="1245" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="3"><span style="color: rgb(192, 0, 0); font-size: 14px;">1.请假事由完全真实，如经调查不属实，同意按“旷课”处理；<br>2.离校期间，自觉遵守国家的法律法规，自觉遵守学校、学院的各项规章制度。<br>3.离校期间，做好个人防护，发生一切人身安全、财产安全和意外事故，完全由本人和家庭承担，学校和学院不承担任何责任和费用。<br>4.请假事由已告知家长，并征得家长同意。<br>5.请假期满，将及时返回学校并到辅导员处报到进行销假。</span><br></td>
+                </tr>
+                <tr>
+                    <td width="171" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">学生签字</td>
+                    <td width="472" valign="middle" style="border-width: 1px; border-style: solid;" rowspan="1" colspan="1"><span id="xsqz">夏德涵</span></td>
+                    <td width="200" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">日期</td>
+                    <td width="188" valign="middle" style="border-width: 1px; border-style: solid;" rowspan="1" colspan="1"><span id="rq">2022-03-22 09:04</span></td>
+                </tr>
+                <tr>
+                    <td width="171" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" class="texttd">审批意见<span id="_baidu_bookmark_start_77" style="line-height: 0px; display: none;">‍</span><span id="_baidu_bookmark_start_78" style="line-height: 0px; display: none;">‍</span><span id="_baidu_bookmark_start_79" style="line-height: 0px; display: none;">‍</span></td>
+                    <td width="1245" valign="middle" style="border-width: 1px; border-style: solid;" rowspan="1" colspan="3"><span class="ue_t" id="remark1" name="remark1" type="remark" remarktype="ALL"><div style="padding-left:8px;color:#0066cc">同意 </div><div align="right" style="padding-right:30px;">辅导员审批  <font color="#339900">刘南山/信息工程学院/信息学院辅导员办公室</font> <font color="#999999">2022-03-22 09:12</font></div><hr style="border: 1px dashed #cccccc; width: 98%; height: 1px;" align="left"></span></td>
+                </tr>
+                <tr>
+                    <td width="160" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd"><span style="color: rgb(0, 0, 0);">学生销假时间&nbsp;<span style="color: rgb(255, 0, 0);"> *</span></span>
+                    </td>
+                    <td width="1245" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="3">
+                        <p><span id="xjsj"></span></p>
+                        <p><span style="color: rgb(192, 0, 0);">注：学生请假结束后填写销假时间</span><span style="color: rgb(192, 0, 0);">。</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="160" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="1" class="texttd">申请必读</td>
+                    <td width="1245" valign="middle" style="border-width: 1px; border-style: solid; -ms-word-break: break-all;" rowspan="1" colspan="3">
+                        <p><span style="color: rgb(0, 0, 0); font-size: 14px;">请假流程说明：<span style="color: rgb(192, 0, 0); font-size: 14px;">(注：辅导员同意请按“提交办理”，不同意按“回退”，否则学生无法销假。)</span></span>
+                        </p>
+                        <p><span style="color: rgb(0, 0, 0); font-size: 14px;">1、2天以内的请假由辅导员审批，通报学生。3—5天请假经辅导员、学院领导审批，通报学生。6天及以上请假经辅导员、学院领导、教务处和学工处共同审批，通报学生。</span></p>
+                        <p><span style="color: rgb(0, 0, 0); font-size: 14px;">2、经同意审批的请假，学生在请假结束时注意填写销假时间，结束流程。</span></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&nbsp;</p>
+        <!-- SUBFORM Begin-->
+        <listsubform>
+
+        </listsubform>
+        <!-- SUBFORM End-->
+
+        <!-- BottomForm Begin-->
+        <div align="right" class="ApprovalBottom" id="BottomToolbar"><img src="./学生请假申请_files/vwicn179.gif" align="absmiddle">
+            <a href="javascript:void(0);" onclick="AddToFavorites();return false;">关注</a>
+            <a href="javascript:void(0);" onclick="PrintForm();return false;">打印</a>
+            <a href="javascript:void(0);" onclick="WF_OpenAttachmentLog();return false;">附件日记</a></div>
+        <!-- BottomForm End-->
+
+        <!-- Workflow Field Begin-->
+        <div style="display:none">
+            <div id="win"></div>
+            <input name="WF_DocUnid" id="WF_DocUnid" value="049f582e06388040d0093a2096788a5b2ee4">
+            <input name="transactiontypeid" id="transactiontypeid" value="">
+            <input name="transactionid" id="transactionid" value="">
+            <input name="WF_Processid" id="WF_Processid" value="cd207a150355f04ea00927804752dc777fbf">
+            <input id="WF_ProcessNumber" value="2">
+            <input id="WF_UserName" value="16102200134">
+            <input id="WF_ProcessName" value="学生请假申请">
+            <input name="WF_NextNodeid" id="WF_NextNodeid" value="">
+            <!--要提交的目的节点-->
+            <input name="WF_NextUserList" id="WF_NextUserList" value="">
+            <!--要提交的目的用户-->
+            <input name="WF_SubNextUserList" id="WF_SubNextUserList" value="">
+            <!--要提交的子流程的目标用户-->
+            <input name="WF_Appid" id="WF_Appid" value="LYGTC">
+            <input id="WF_CurrentNodeid" value="">
+            <!-- 当前用户所处节点id,空表示无权-->
+            <input id="WF_CurrentNodeName" value="">
+            <input id="WF_NewDocFlag" name="WF_NewDocFlag" value="false">
+            <!-- true表示新文档-->
+            <input id="WF_IsFirstNodeFlag" value="false">
+            <!-- true表示是首环节-->
+            <input id="WF_NodeProperty" value="">
+            <!-- 在环节中标识的自定义节点参数-->
+            <input id="WF_DocStatus" value="ARC" disabled="">
+            <input name="WF_Remark" id="WF_Remark" value="">
+        </div>
+        <!-- Workflow Field End-->
+    </form>
+
+    <div class="pobmodal-overlay">
+        <div id="pobmodal-dialog">
+            <h2>提示</h2>当前文档正处于打开状态，请点击<a style="color:red;" href="javascript:POBrowser.resumePO();"> 这里 </a>切换PageOffice窗口继续查看或编辑文档。
+            <div class="button-holder"><br><br><a class="button blue" href="javascript:POBrowser.resumePO();"> 立即切换 PageOffice 窗口</a></div>
+        </div>
+    </div>
+</body>
+
+</html>
